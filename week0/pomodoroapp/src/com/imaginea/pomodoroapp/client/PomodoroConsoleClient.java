@@ -1,12 +1,15 @@
 package com.imaginea.pomodoroapp.client;
 
 import com.imaginea.pomodoroapp.model.Task;
+import com.imaginea.pomodoroapp.service.PomodoroTimer;
+import com.imaginea.pomodoroapp.service.PomodoroTimerImpl;
 import com.imaginea.pomodoroapp.service.TaskService;
 import com.imaginea.pomodoroapp.service.TaskServiceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class PomodoroConsoleClient {
 
@@ -17,10 +20,11 @@ public class PomodoroConsoleClient {
 
         TaskService taskService = TaskServiceFactory.getTaskServiceInstance();
 
+        PomodoroTimer pomodoro = new PomodoroTimerImpl(new Timer());
+
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter option from menu below to do operations ->");
-        System.out.println("Press 1.Add new task in todo list, 2.Mark existing task as completed ,3.Delete an existing task from todo list,4.View all tasks ,5.Exit ");
+        displayMenu();
 
         int selectedoption ;
         selectedoption = sc.nextInt();
@@ -66,6 +70,14 @@ public class PomodoroConsoleClient {
 
                     break;
 
+                case 5:
+                    pomodoro.startTimer(5);
+                    break;
+
+                case 6:
+                    pomodoro.stopTimer();
+                    break;
+
                 default:
                     System.out.println("Incorrect menu option selected , please enter valid menu option");
 
@@ -75,7 +87,25 @@ public class PomodoroConsoleClient {
             selectedoption = sc.nextInt();
 
         }
-        while(selectedoption!=5);
+        while(selectedoption!=7);
+
+    }
+
+
+    public void displayMenu(){
+
+
+        System.out.println("Enter option from menu below to do operations ->");
+        System.out.println("1.Add new task in todo list ");
+        System.out.println("2.Mark existing task as completed ");
+        System.out.println("3.Delete an existing task from todo list");
+        System.out.println("4.View all tasks ");
+        System.out.println("5.Start Pomodoro Timer ");
+        System.out.println("6.Stop Pomodoro Timer ");
+
+        System.out.println("7.Exit");
+
+
 
     }
 
